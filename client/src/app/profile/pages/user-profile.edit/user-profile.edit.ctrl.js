@@ -5,23 +5,20 @@
 
     function TwProfileUserEditController($scope, $state, $stateParams, $log, $timeout, toastr, twMoment, twUserRepository, twUserGeneratorService) {
 
-        // view model
-        var vm = this;
-
         // public attributes
-        vm.user = null;
+        $scope.user = null;
 
         // public methods
-        vm.getFullName = getFullName;
-        vm.reset = reset;
-        vm.getAgeInYears = getAgeInYears;
-        vm.employedUpdated = employedUpdated;
-        vm.submit = submit;
-        vm.getMinSalary = getMinSalary;
+        $scope.getFullName = getFullName;
+        $scope.reset = reset;
+        $scope.getAgeInYears = getAgeInYears;
+        $scope.employedUpdated = employedUpdated;
+        $scope.submit = submit;
+        $scope.getMinSalary = getMinSalary;
         // 'edition' or 'creation'
-        vm.mode;
-        vm.activeMenu;
-        vm.remove = remove;
+        $scope.mode;
+        $scope.activeMenu;
+        $scope.remove = remove;
 
         // initialization
         init();
@@ -40,8 +37,8 @@
         }
 
         function getFullName() {
-            if (vm.user && vm.user.firstName && vm.user.lastName) {
-                return vm.user.firstName + ' ' + vm.user.lastName;
+            if ($scope.user && $scope.user.firstName && $scope.user.lastName) {
+                return $scope.user.firstName + ' ' + $scope.user.lastName;
             }
         }
 
@@ -49,13 +46,13 @@
 
             if ($stateParams.userId) {
 
-                vm.mode = 'edition';
-                vm.activeMenu = 'edit-user';
+                $scope.mode = 'edition';
+                $scope.activeMenu = 'edit-user';
 
 
                 twUserRepository.findOne($stateParams.userId).then(function (user) {
                     // success
-                    vm.user = user;
+                    $scope.user = user;
                 }, function (err) {
                     $log.error(err);
                     // display an error message
@@ -69,20 +66,21 @@
 
             } else {
 
-                vm.mode = 'creation';
-                vm.activeMenu = 'create-user';
-                vm.user = twUserGeneratorService.generateUser();
+                $scope.mode = 'creation';
+                $scope.activeMenu = 'create-user';
+                $scope.user = twUserGeneratorService.generateUser();
+                delete $scope.user._id;
             }
 
         }
 
         function getAgeInYears() {
-            if (!vm.user || !vm.user.birthdate) {
+            if (!$scope.user || !$scope.user.birthdate) {
                 return null;
             }
 
             var today = twMoment(new Date());
-            var birthday = twMoment(vm.user.birthdate);
+            var birthday = twMoment($scope.user.birthdate);
 
             var years = today.diff(birthday, 'years', false);
             if (years >= 0) {
@@ -93,9 +91,9 @@
         }
 
         function employedUpdated() {
-            if (!vm.user.employed) {
+            if (!$scope.user.employed) {
                 // re-init salary to null
-                vm.user.salary = null;
+                $scope.user.salary = null;
             }
         }
 
@@ -104,9 +102,9 @@
 
             if (userForm.$valid) {
 
-                if (vm.mode === 'edition') {
+                if ($scope.mode === 'edition') {
 
-                    twUserRepository.updateOne(vm.user).then(function (user) {
+                    twUserRepository.updateOne($scope.user).then(function (user) {
                         // success: display a success message
                         toastr.success('User successfully saved.');
 
@@ -121,7 +119,7 @@
                     });
                 } else {
 
-                    twUserRepository.createOne(vm.user).then(function (user) {
+                    twUserRepository.createOne($scope.user).then(function (user) {
                         // success: display a success message
                         toastr.success('User successfully created.');
 
@@ -140,7 +138,7 @@
         }
 
         function remove() {
-            twUserRepository.removeOne(vm.user._id).then(function (user) {
+            twUserRepository.removeOne($scope.user._id).then(function (user) {
                 // success: display a success message
                 toastr.success('User successfully removed.');
 
