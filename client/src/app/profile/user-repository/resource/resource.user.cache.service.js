@@ -13,7 +13,7 @@
         
         if (!cache){
             // create cache if necessary
-            CacheFactory(cacheId, {
+            cache = CacheFactory(cacheId, {
                 storageMode: 'localStorage'
             });
         }
