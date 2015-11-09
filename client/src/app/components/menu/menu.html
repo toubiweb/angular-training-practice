@@ -3,11 +3,14 @@
         <div class="navbar-header">
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li ng-class="{ active: vm.activeMenu === 'view-users' }"><a ui-sref="view-users">Users</a>
+                    <li class="view-users-item" ng-class="{ active: vm.activeMenu === 'view-users' }">
+                        <a ui-sref="view-users">Users</a>
                     </li>
-                    <li ng-if="vm.activeMenu === 'edit-user'" ng-class="{ active: vm.activeMenu === 'edit-user' }"><a ui-sref="edit-user">Edit user</a>
+                    <li class="edit-user-item" ng-if="vm.activeMenu === 'edit-user'" ng-class="{ active: vm.activeMenu === 'edit-user' }">
+                        <a ui-sref="edit-user">Edit user</a>
                     </li>
-                    <li tw-has-role="admin" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }"><a ui-sref="create-user">Create user</a>
+                    <li class="create-user-item" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }">
+                        <a ui-sref="create-user">Create user</a>
                     </li>
                 </ul>
             </div>
