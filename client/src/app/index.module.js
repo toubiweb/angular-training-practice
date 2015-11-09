@@ -24,7 +24,7 @@
     angular.module('tw.practice').run(runModule);
     
     /** @ngInject */
-    function configureModule($logProvider, $locationProvider, $urlRouterProvider, toastrConfig) {
+    function configureModule($logProvider, $locationProvider, $urlRouterProvider, toastrConfig, twUserRepositoryProvider) {
         // Enable log
         $logProvider.debugEnabled(true);
 
@@ -40,7 +40,10 @@
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise('/');
 
-      
+        twUserRepositoryProvider.configure({
+            // repository: 'ng-resources'
+            repository: 'js-data'
+        });
     }
 
     /** @ngInject */
