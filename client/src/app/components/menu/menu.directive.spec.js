@@ -5,9 +5,11 @@
         var $compile,
             $rootScope, $scope, $log;
         
-        // TODO load module containing the directive
+        // load module containing the directive
+        beforeEach(module('tw.practice'));
 
-        // TODO load templates
+        // load templates
+        beforeEach(module('ngHtml2JsPreprocessor'));
 
         beforeEach(inject(function (_$compile_, _$rootScope_, _$log_) {
             // the injector unwraps the underscores (_) from around the parameter names when matching
@@ -19,17 +21,14 @@
 
         it('should add active class to menu when activeMenu matchs', function () {
 
-            // TODO compile the template
-            var element = angular.element('TODO');
+            // compile the template
+            var element = angular.element('<div tw-menu active-menu="activeMenu"></div>');
             var template = $compile(element)($scope);
 
             // update root scope with view-uses as active menu
-            $scope.activeMenu = 'TODO';
-
+            $scope.activeMenu = 'view-users';
             // run a $digest cycle to update your template with new data
             $rootScope.$digest();
-            
-            // console.log(template);
             
             // expect view-users-item to be active
             expect(template.find('li.view-users-item').hasClass('active')).toBeTruthy();
@@ -38,16 +37,16 @@
 
         it('should hide create-user when user is in edition', function () {
 
-            // TODO compile the template
-            var element = angular.element('TODO');
+            // compile the template
+            var element = angular.element('<div tw-menu active-menu="activeMenu"></div>');
             var template = $compile(element)($scope);
 
             // update root scope with view-uses as active menu
-            $scope.activeMenu = 'TODO';
-
+            $scope.activeMenu = 'edit-user';
             // run a $digest cycle to update your template with new data
             $rootScope.$digest();
             
+            // $log.debug(template);
             // console.log(template);
             
             // expect creat-users to be hidden
