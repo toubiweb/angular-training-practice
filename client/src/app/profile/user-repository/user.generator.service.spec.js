@@ -1,22 +1,21 @@
 (function () {
     'use strict';
 
-    // TODO s'inspirer de app/components/form/password/form.password.service.spec.js
-    // pour tester user.generator.service.js
-    // - test de generateUser qui vérifie que l'objet retourné à un email et une date de naissance valide
-    // - test de generateUsers qui vérifie que le nombre d'users retourné correspond à celui passé en paramètre
-    // - test de generateUsers avec des valeurs limites (0, -1)
-   
     describe('twUserGeneratorService', function () {
 
-        // TODO: load module
+       // load module
+        beforeEach(module('tw.practice.profile'));
 
-        // TODO retrieve service instance
+        // retrieve service instance
+        var twUserGeneratorService;
+
+        beforeEach(inject(function (_twUserGeneratorService_) {
+            twUserGeneratorService = _twUserGeneratorService_;
+        }));
 
         it('generateUser should return a valid email', function () {
             
-            // TODO: call twUserGeneratorService.generateUser
-            var user = {};
+            var user = twUserGeneratorService.generateUser();
             
             expect(user.email).toBeDefined();
             expect(user.email).toBeAValidEmail();
@@ -24,8 +23,7 @@
 
         it('generateUser should return a valid birthdate', function () {
             
-            // TODO: call twUserGeneratorService.generateUser
-            var user = {};
+            var user = twUserGeneratorService.generateUser();
             
             expect(user.birthdate).toBeDefined();
             expect(user.birthdate instanceof Date).toBeTruthy();
@@ -34,18 +32,15 @@
         it('generateUsers should return the required number of results', function () {
             
             {
-                // TODO: call twUserGeneratorService.generateUsers
-                var users10 = [1,2,3];
+                var users10 = twUserGeneratorService.generateUsers(10);
                 expect(users10.length).toEqual(10);
             }
             {
-                // TODO: call twUserGeneratorService.generateUsers
-                var users0 = [1,2,3];
+                var users0 = twUserGeneratorService.generateUsers(0);
                 expect(users0.length).toEqual(0);
             }
             {
-                // TODO: call twUserGeneratorService.generateUsers
-                var usersNegative = [1,2,3];
+                var usersNegative = twUserGeneratorService.generateUsers(-1);
                 expect(usersNegative.length).toEqual(0);
             }
         });
