@@ -1,9 +1,9 @@
 <div class="container profile-user-edit">
 
-    <div tw-menu active-menu="activeMenu"></div>
+    <div tw-menu active-menu="vm.activeMenu"></div>
 
-    <div ng-if="mode === 'edition'">
-        <a class="link" ui-sref="edit-password({firstName: user.firstName})">Change password</a>
+    <div ng-if="vm.mode === 'edition'">
+        <a class="link" ui-sref="edit-password({firstName: vm.user.firstName})">Change password</a>
     </div>
 
     <div class="page">
@@ -11,17 +11,17 @@
 
             <div class="col-md-8">
 
-                <div ng-switch on="mode">
+                <div ng-switch on="vm.mode">
                     <h1 ng-switch-when="creation">Create user</h1>
-                    <h1 ng-switch-when="edition">Edit user "{{ getFullName() }}"</h1>
+                    <h1 ng-switch-when="edition">Edit user "{{ vm.getFullName() }}"</h1>
                 </div>
 
                 <form name="userForm" novalidate>
-                    <div class="row" ng-if="mode === 'creation'">
+                    <div class="row" ng-if="vm.mode === 'creation'">
                         <div class="col-md-4">
                             <div class="form-group required">
                                 <label class="control-label">Login</label>
-                                <input name="login" required ng-minlength="4" class="form-control" type="text" ng-model="user.login">
+                                <input name="login" required ng-minlength="4" class="form-control" type="text" ng-model="vm.user.login">
                                 <!-- using attribute directives -->
 
                                 <div tw-error-messages form="userForm" attribute-name="login">
@@ -35,7 +35,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label class="control-label">Password</label>
-                                        <input name="password" required minlength="4" class="form-control" type="password" ng-model="user.password">
+                                        <input name="password" required minlength="4" class="form-control" type="password" ng-model="vm.user.password">
                                     </div>
 
                                     <div tw-error-messages form="userForm" attribute-name="password">
@@ -46,7 +46,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label class="control-label">Password (confirm)</label>
-                                        <input name="passwordConfirmation" class="form-control" type="password" ng-model="passwordConfirmation" match="password">
+                                        <input name="passwordConfirmation" class="form-control" type="password" ng-model="vm.passwordConfirmation" match="vm.password">
                                     </div>
                                     <div tw-error-messages form="passwordForm" attribute-name="passwordConfirmation">
                                         <!-- override default message -->
@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div tw-robustness-bar password="user.password">
+                            <div tw-robustness-bar password="vm.user.password">
                                 Robustness:
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         <div class="col-md-4">
                             <div class="form-group required">
                                 <label class="control-label">First name</label>
-                                <input name="firstName" required ng-minlength="2" class="form-control" type="text" ng-model="user.firstName">
+                                <input name="firstName" required ng-minlength="2" class="form-control" type="text" ng-model="vm.user.firstName">
                                 <!-- using attribute directives -->
 
                                 <div tw-error-messages form="userForm" attribute-name="firstName">
@@ -75,7 +75,7 @@
                         <div class="col-md-4">
                             <div class="form-group required">
                                 <label class="control-label">Last name</label>
-                                <input name="lastName" required minlength="3" class="form-control" type="text" ng-model="user.lastName">
+                                <input name="lastName" required minlength="3" class="form-control" type="text" ng-model="vm.user.lastName">
 
                                 <div tw-error-messages form="userForm" attribute-name="lastName">
                                     <!-- override default message -->
@@ -86,7 +86,7 @@
                         <div class="col-md-4">
                             <div class="form-group required">
                                 <label class="control-label">Email</label>
-                                <input name="email" required class="form-control" type="email" ng-model="user.email">
+                                <input name="email" required class="form-control" type="email" ng-model="vm.user.email">
                                 <div tw-error-messages form="userForm" attribute-name="email"></div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">Gender</label>
-                                <select name="gender" class="form-control" ng-model="user.gender">
+                                <select name="gender" class="form-control" ng-model="vm.user.gender">
                                     <option value="female">Female</option>
                                     <option value="male">Male</option>
                                 </select>
@@ -104,26 +104,26 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">Birthdate</label>
-                                <input name="birthdate" class="form-control" type="text" ng-model="user.birthdate" bs-datepicker data-date-format="yyyy-MM-dd" data-max-date="today" data-autoclose="1" data-date-type="iso">
+                                <input name="birthdate" class="form-control" type="text" ng-model="vm.user.birthdate" bs-datepicker data-date-format="yyyy-MM-dd" data-max-date="today" data-autoclose="1" data-date-type="iso">
                                 <div tw-error-messages form="userForm" attribute-name="birthdate"></div>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group employed-form-group">
                                 <label class="control-label">Employed</label>
-                                <input class="form-control" type="checkbox" ng-model="user.employed" ng-change="employedUpdated()">
+                                <input class="form-control" type="checkbox" ng-model="vm.user.employed" ng-change="vm.employedUpdated()">
                             </div>
                         </div>
-                        <div class="col-md-2" ng-show="user.employed">
+                        <div class="col-md-2" ng-show="vm.user.employed">
                             <!--     <div class="form-group">
                                 <label class="control-label">Salary</label>
-                                <input name="salary" class="form-control" type="number" ng-model="user.salary" tw-salary-validator age="getAgeInYears()">
+                                <input name="salary" class="form-control" type="number" ng-model="vm.user.salary" tw-salary-validator age="vm.getAgeInYears()">
                                 <div tw-error-messages form="userForm" attribute-name="salary"></div>
                             </div>-->
 
                             <div class="form-group">
                                 <label class="control-label">Salary</label>
-                                <input name="salary" class="form-control" type="number" ng-model="user.salary" ng-min="getMinSalary()">
+                                <input name="salary" class="form-control" type="number" ng-model="vm.user.salary" ng-min="vm.getMinSalary()">
                                 <div tw-error-messages form="userForm" attribute-name="salary">
                                     <div class="error" ng-message="min">Invalid min salary.</div>
                                 </div>
@@ -132,17 +132,17 @@
                     </div>
                     <div class="row text-center actions-bar">
                         <div class="col-md-4">
-                            <a ng-click="submit(userForm)" class="btn btn-lg btn-ok large outline">
+                            <a ng-click="vm.submit(userForm)" class="btn btn-lg btn-ok large outline">
                                 <i class="glyphicon glyphicon-check"></i> Save
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a ng-click="reset();userForm.$setPristine();userForm.$setUntouched();" class="btn btn-lg btn-cancel large outline">
+                            <a ng-click="vm.reset();userForm.$setPristine();userForm.$setUntouched();" class="btn btn-lg btn-cancel large outline">
                                 <i class="glyphicon glyphicon-remove"></i> Reset
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a ng-click="remove()" class="btn btn-lg btn-cancel large outline">
+                            <a ng-click="vm.remove()" class="btn btn-lg btn-cancel large outline">
                                 <i class="glyphicon glyphicon-trash"></i> Remove
                             </a>
                         </div>
@@ -157,30 +157,30 @@
                     <tbody>
                         <tr>
                             <th>Name</th>
-                            <td ng-class="'gender-' + user.gender">{{ getFullName() }}</td>
-                            <!-- or: ng-class="{ 'gender-male': user.gender === 'male',  'gender-female': user.gender === 'female' }">-->
+                            <td ng-class="'gender-' + vm.user.gender">{{ vm.getFullName() }}</td>
+                            <!-- or: ng-class="{ 'gender-male': vm.user.gender === 'male',  'gender-female': vm.user.gender === 'female' }">-->
                         </tr>
                         <tr>
                             <th>Email</th>
-                            <td>{{ user.email }}</td>
+                            <td>{{ vm.user.email }}</td>
                         </tr>
                         <tr>
                             <th>Birthdate</th>
-                            <td>{{ user.birthdate | date: 'yyyy-MM-dd' }}</td>
+                            <td>{{ vm.user.birthdate | date: 'yyyy-MM-dd' }}</td>
                         </tr>
                         <tr>
                             <th>Age</th>
-                            <td>{{ getAgeInYears() }}</td>
+                            <td>{{ vm.getAgeInYears() }}</td>
                         </tr>
                         <tr>
                             <th>Gender</th>
                             <td>
-                                {{user.gender, select, male {He is a man.} female {She is a women.} other {Unknown gender.} }}
+                                {{vm.user.gender, select, male {He is a man.} female {She is a women.} other {Unknown gender.} }}
                             </td>
                         </tr>
                         <tr>
                             <th>Salary</th>
-                            <td>{{ user.salary | currency }}</td>
+                            <td>{{ vm.user.salary | currency }}</td>
                         </tr>
                     </tbody>
                 </table>

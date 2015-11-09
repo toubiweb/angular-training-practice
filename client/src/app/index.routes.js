@@ -20,12 +20,14 @@
                 url: '/user/create-user',
                 templateUrl: 'app/profile/pages/user-profile.edit/user-profile.edit.html',
                 controller: 'TwProfileUserEditController',
+                controllerAs: 'vm',
                 roles: ['admin']
             })
             .state('edit-user', {
                 url: '/user/:userId/edit-profile',
                 templateUrl: 'app/profile/pages/user-profile.edit/user-profile.edit.html',
                 controller: 'TwProfileUserEditController',
+                controllerAs: 'vm',
                 authenticate: true
             });
     }
