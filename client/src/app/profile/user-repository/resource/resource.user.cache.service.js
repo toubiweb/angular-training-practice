@@ -27,7 +27,8 @@
         service.injectAll = injectAll;
         
         function removeAll() {
-            // TODO clear cache
+            // clear cache
+            return cache.removeAll();
         }
 
         function getAll() {
@@ -38,31 +39,40 @@
         }
 
         function replaceAll(values) {
-            cache.removeAll();
+            removeAll();
             injectAll(values);
         }
 
         function injectAll(users) {
-            // TODO inject all items into cache
+            // inject all items into cache
+            for(var i = 0; i < users.length; i++){
+                var user = users[i];
+                set(user);
+            }
             return users;
         }
         
         function set(user) {
             var cacheKey = 'user.' + user._id;
-            // TODO update cache
+            // update cache
+            cache.put(cacheKey, user);
             return user;
         }
 
         function get(userId) {
             var cacheKey = 'user.' + userId;
-            // TODO read cache
-            var value = null;
+            // read cache
+            var value = cache.get(cacheKey);
+            if (!value){
+                value = null;
+            }
             return value;
         }
 
         function remove(userId) {
             var cacheKey = 'user.' + userId;
-            // TODO remove from cache
+            // remove from cache
+            return cache.remove(cacheKey);
         }
 
         return service;

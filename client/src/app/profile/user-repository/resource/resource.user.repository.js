@@ -3,7 +3,7 @@
 
     angular.module('tw.practice.profile').factory('twResourceUserRepository', twResourceUserRepository);
 
-    function twResourceUserRepository($resource, $log, $q) {
+    function twResourceUserRepository($resource, $log, $q, twResourceUserCacheService) {
 
         var service = {};
 
@@ -20,10 +20,17 @@
         service.createOne = createOne;
         service.updateOne = updateOne;
         service.removeOne = removeOne;
+        service.clearCache = clearCache;
         service.injectAll = injectAll;
 
+        function clearCache(){
+            $log.debug('Clear user resources cache.');
+            return twResourceUserCacheService.removeAll();
+        }
+        
         function injectAll(users){
-            // TODO later
+            $log.debug('Inject %d users to resources cache.', users.length);
+            return twResourceUserCacheService.injectAll(users);
         }
         
         /**
@@ -32,16 +39,25 @@
         function findAll(params) {
 
             var deferred = $q.defer();
-            
-			// query http server
-			UserResource.query(params, function (users) {
-				// success
-				deferred.resolve(users);
-			}, function error(err) {
-				// http error
-				$log.error(err);
-				deferred.reject(err);
-			});
+
+            var users = twResourceUserCacheService.getAll();
+
+            if (users.length !== 0) {
+                // return users from cach
+                $log.debug('Retrieve %d users from cache.', users.length);
+                deferred.resolve(users);
+            } else {
+                // query http server
+                UserResource.query(params, function (users) {
+                    // success: store users into cache
+                    twResourceUserCacheService.replaceAll(users);
+                    deferred.resolve(users);
+                }, function error(err) {
+                    // http error
+                    $log.error(err);
+                    deferred.reject(err);
+                });
+            }
 
             return deferred.promise;
         }
@@ -50,18 +66,26 @@
 
             var deferred = $q.defer();
 
-           
-			// query http server
-			UserResource.get({
-				userId: userId
-			}, function (user) {
-				// success
-				deferred.resolve(user);
-			}, function error(err) {
-				// http error
-				$log.error(err);
-				deferred.reject(err);
-			});
+            var user = twResourceUserCacheService.get(userId);
+
+            if (user) {
+                // return user from cache
+                $log.debug('Retrieve user %d from cache.', user._id);
+                deferred.resolve(user);
+            } else {
+                // query http server
+                UserResource.get({
+                    userId: userId
+                }, function (user) {
+                    // success: store user into cache
+                    twResourceUserCacheService.set(user);
+                    deferred.resolve(user);
+                }, function error(err) {
+                    // http error
+                    $log.error(err);
+                    deferred.reject(err);
+                });
+            }
 
             return deferred.promise;
         }
@@ -73,7 +97,8 @@
             // query http server
             var newUser = new UserResource(user);
             newUser.$save(function (user) {
-                // success
+                // success: add user into cache
+                twResourceUserCacheService.set(user);
                 deferred.resolve(user);
 
             }, function (err) {
@@ -93,7 +118,8 @@
             UserResource.update({
                 userId: user._id
             }, user, function (user) {
-                // success
+                // success: update user into cache
+                twResourceUserCacheService.set(user);
                 deferred.resolve(user);
 
             }, function (err) {
@@ -113,7 +139,8 @@
             UserResource.remove({
                 userId: userId
             }, function (response) {
-                // success
+                // success: remove from cache
+                twResourceUserCacheService.remove(userId);
                 deferred.resolve(response);
 
             }, function (err) {
