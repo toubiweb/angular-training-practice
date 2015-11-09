@@ -1,0 +1,16 @@
+<nav class="tw-menu navbar navbar-static-top navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{ active: vm.activeMenu === 'view-users' }"><a ui-sref="view-users">Users</a>
+                    </li>
+                    <li ng-if="vm.activeMenu === 'edit-user'" ng-class="{ active: vm.activeMenu === 'edit-user' }"><a ui-sref="edit-user">Edit user</a>
+                    </li>
+                    <li tw-has-role="admin" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }"><a ui-sref="create-user">Create user</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

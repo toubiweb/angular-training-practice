@@ -1,0 +1,58 @@
+{
+  "name": "angular14IntermediateTrainingPractice",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-animate": "~1.4.2",
+    "angular-cookies": "~1.4.7",
+    "angular-touch": "~1.4.2",
+    "angular-sanitize": "~1.4.2",
+    "angular-messages": "~1.4.2",
+    "angular-aria": "~1.4.2",
+    "jquery": "~2.1.4",
+    "angular-resource": "~1.4.2",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap-sass": "~3.3.5",
+    "angular-strap": "~2.3.1",
+    "malarkey": "yuanqing/malarkey#~1.3.1",
+    "angular-toastr": "~1.5.0",
+    "moment": "~2.10.6",
+    "animate.css": "~3.4.0",
+    "angular": "~1.4.2",
+    "pct-moment": "~0.0.3",
+    "angular-validation-match": "~1.6.0",
+    "angular-jwt": "~0.0.9",
+    "angular-cache": "~4.4.2",
+    "localforage": "~1.3.0",
+    "js-data": "~2.8.2",
+    "js-data-localforage": "~2.1.1",
+    "js-data-angular": "~3.1.0",
+    "leaflet": "1.0.0-beta.2",
+    "nvd3": "~1.8.1",
+    "angular-i18n": "~1.4.7",
+    "angular-message-format": "~1.4.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.2"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": [
+        "assets/stylesheets/_bootstrap.scss",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.eot",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.svg",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.woff",
+        "assets/fonts/bootstrap/glyphicons-halflings-regular.woff2"
+      ]
+    },
+    "angular-i18n": {
+      "main": [
+        "angular-locale_fr-fr.js"
+      ]
+    }
+  },
+  "resolutions": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.2"
+  }
+}

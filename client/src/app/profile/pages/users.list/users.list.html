@@ -1,0 +1,113 @@
+<div class="container profile-users-list-page">
+
+    <div tw-menu active-menu="'view-users'"></div>
+
+    <h2>Users ({{ vm.users.length }})</h2>
+
+    <form novalidate class="block-with-top-bottom-margins">
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="control-label">First name: </label>
+                <input ng-model="vm.nonstrictFilter.firstName" />
+            </div>
+            <div class="col-sm-3">
+                <label class="control-label">Gender</label>
+                <select ng-model="vm.strictFilter.gender" ng-options="gender.id as gender.label for gender in vm.genderOptions">
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <a class="btn btn-primary" ng-click="vm.generateUsers(vm.nbUsersToGenerate)">Generate users</a>
+                <input ng-model="vm.nbUsersToGenerate" />
+            </div>
+        </div>
+    </form>
+
+    <div class="alert alert-danger block-with-top-bottom-margins" ng-show="vm.filteredUsers.length === 0 && vm.users.length !== 0">
+        There are no users matching your search.
+    </div>
+    <div class="alert alert-danger block-with-top-bottom-margins" ng-show="vm.filteredUsers.length === 0 && vm.users.length === 0">
+        There are no users.
+    </div>
+    <table class="table table-bordered table-striped table-hover table-condensed block-with-top-bottom-margins" ng-show="vm.filteredUsers.length">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Birthdate</th>
+                <th>Employed</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="user-row link" ng-repeat="user in vm.filteredUsers = (vm.users | filter:vm.strictFilter:true | filter:vm.nonstrictFilter ) | orderBy:'firstName':true | limitTo:vm.itemsByPage:vm.getFirstIndex()" ng-click="vm.goToDetails(user)">
+                <td>{{ user._id }}</td>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.birthdate | date }}</td>
+                <td>{{ user.employed }}</td>
+                <td>{{ user.salary }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8" class="pagination-container">
+                    <nav class="text-center">
+                        <ul class="pagination">
+                            <li ng-class="{ 'disabled': vm.currentPage <= 1}" ng-class="{ 'disabled': vm.currentPage <= 1}">
+                                <a class="btn btn-small btn-primary" ng-click="vm.goToPreviousPage()">
+                                             &laquo; Previous
+                                        </a>
+                            </li>
+                            <li class="active">
+                                <a href="#">{{ vm.currentPage }}/{{vm.getTotalPages()}}</a>
+                            </li>
+                            <li ng-class="{ 'disabled': vm.currentPage >= vm.getTotalPages()}">
+                                <a class="btn btn-small btn-primary" ng-click="vm.goToNextPage()">
+                                             Next &raquo;
+                                        </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="alert alert-info block-with-top-bottom-margins">
+                {{vm.users.length, plural, offset:0 =0 {There is no user} =1 {There is only one user} other {There are # users (including you {{ vm.currentUser.firstName }}).} }}
+            </div>
+
+            <table class="table table-bordered table-striped table-hover table-condensed block-with-top-bottom-margins">
+                <thead>
+                    <tr>
+                        <th>Total</th>
+                        <th>Filtered</th>
+                        <th>First index</th>
+                        <th>Last index</th>
+                        <th>Users per page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ vm.users.length }}</td>
+                        <td>{{ vm.filteredUsers.length }}</td>
+                        <td>{{ vm.getFirstHumanIndex() }}</td>
+                        <td>{{ vm.getLastHumanIndex() }}</td>
+                        <td>
+                            <input ng-model="vm.itemsByPage" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

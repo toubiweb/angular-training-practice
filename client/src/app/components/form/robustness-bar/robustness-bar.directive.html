@@ -1,0 +1,7 @@
+<div class="robustness-bar">
+    <div class="progress">
+        <div class="progress-bar" ng-class="vm.getProgressClass()" role="progressbar" aria-valuenow="{{ vm.getStrongnessPercentage() }}" aria-valuemin="0" aria-valuemax="100" ng-style="{ width: vm.getStrongnessPercentage() + '%' }">
+            <span ng-transclude></span> {{ vm.getStrongnessPercentage() }}%
+        </div>
+    </div>
+</div>

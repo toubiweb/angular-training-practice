@@ -1,0 +1,29 @@
+.tw-menu {
+    .navbar-header {
+        width: 100%;
+        font-weight: bold;
+        .nav li {
+            .clear-cache {
+                color: rgba(190, 97, 63, 0.76);
+                &:hover{
+                    color: coral;
+                }
+            }
+            .profile {
+                margin-left: 50px;
+                margin-right: 30px;
+                padding-bottom: 2px;
+                padding-top: 2px;
+                color: #bbb;
+                text-align: center;
+                font-size: 0.9em;
+                .username {
+                    font-style: bold;
+                }
+                .role {
+                    font-style: normal;
+                }
+            }
+        }
+    }
+}

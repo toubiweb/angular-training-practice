@@ -1,0 +1,50 @@
+.btn.large {
+    padding: 14px 24px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+// large button
+.btn.large:focus,
+.btn.large:active:focus,
+.btn.large.active:focus {
+    outline: 0 none;
+}
+
+// outline button (common)
+.btn.outline {
+    background: none;
+    padding: 12px 22px;
+}
+
+// custom button
+@mixin custom-button($lightColor,$darkColor) {
+    // normal
+    background: $lightColor;
+    color: #ffffff;
+    &:hover, &:focus, &:active, &.active {
+        background: $darkColor;
+        color: #555;
+    }
+    // outline
+    &.outline {
+        border: 2px solid $lightColor;
+        color: $lightColor;
+    }
+    &.outline:hover,
+    &.outline:focus,
+    &.outline:active {
+        border-color: $lightColor;
+        color: #ffffff;
+    }
+}
+
+.btn-ok {
+    @include custom-button(#0099cc, #33a6cc);
+}
+
+.btn-cancel {
+    @include custom-button(#ea5c31, #de542a);
+}

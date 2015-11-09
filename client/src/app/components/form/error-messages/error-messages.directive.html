@@ -1,0 +1,10 @@
+<div ng-messages="vm.form[vm.attributeName].$error" ng-if="vm.form[vm.attributeName].$touched || vm.form.$submitted">
+    <div ng-transclude></div>
+    <div class="error" ng-message="required">Field is required.</div>
+    <div class="error" ng-message="email">Please enter a valid email address.</div>
+    <div class="error" ng-message="number">Please enter a valid number.</div>
+    <div class="error" ng-message="minlength">Too short.</div>
+    <div class="error" ng-message="date">Date is invalid.</div>
+    <div class="error" ng-message="match">Field does not match.</div>
+    <div class="error" ng-message="salary">Invalid salary.</div>
+</div>
