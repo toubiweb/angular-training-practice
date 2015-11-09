@@ -23,7 +23,9 @@
 
         function injectAll(users) {
             $log.debug('Inject %d users to js-data cache.', users.length);
+
             var injected = DS.inject('users', users);
+
             return injected;
         }
 
@@ -33,27 +35,29 @@
         function findAll(params) {
 
             // use filter is used to retrieved data injected manually to the cache (it can be configured globaly too)
-            // TODO
+            return DS.findAll('users', params, {
+                useFilter: true
+            });
         }
 
         function findOne(userId) {
 
-           // TODO
+            return DS.find('users', userId);
         }
 
         function createOne(user) {
 
-            // TODO
+            return DS.create('users', user);
         }
 
         function updateOne(user) {
 
-           // TODO
+            return DS.save('users', user);
         }
 
         function removeOne(userId) {
 
-            // TODO
+            return DS.destroy('users', userId);
 
         }
 
