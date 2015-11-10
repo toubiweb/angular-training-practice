@@ -1,0 +1,33 @@
+<div class="container profile-password-edit">
+
+    <div tw-menu active-menu="'login'"></div>
+
+    <h1>Login</h1>
+        
+    <p>Defaut admin account is <code>mary</code> / <code>pass</code></p>
+    <p>Defaut user account is <code>john</code> / <code>pass</code></p>
+    
+    <div class="col-sm-12">
+        <form class="form" name="form" ng-submit="vm.login(form)" novalidate>
+
+            <div class="form-group">
+                <label>Login</label>
+
+                <input autocomplete="off" type="text" name="login" class="form-control" ng-model="vm.user.login" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+
+                <input type="password" name="password" class="form-control" ng-model="vm.user.password" required>
+            </div>
+
+            <div>
+                <button class="btn btn-inverse btn-lg btn-login" type="submit">
+                    Login
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

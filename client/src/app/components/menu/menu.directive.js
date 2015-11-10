@@ -15,19 +15,26 @@
         };
     }
 
-    function TwMenuController($state, twUserRepository) {
+    function TwMenuController($state, twUserRepository, twSecurityService) {
 
         // view model
         var vm = this;
 
         // public attributes
+        vm.user = twSecurityService.getCurrentUser()
         
         // public methods
+        vm.clearCache = clearCache;
+        
+        vm.isUserAuthenticated = twSecurityService.isAuthenticated;
+        // public methods
 
-        // initialization
-        init();
-
-        function init() {}
+        function clearCache(){
+            // clear cache
+            twUserRepository.clearCache();
+            // reload page
+            $state.reload();
+        }
         
         return vm;
     }

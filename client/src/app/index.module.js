@@ -16,6 +16,8 @@
         , 'validation.match'
         , 'tw.practice.profile' // profile
         , 'tw.practice.form' // form
+        , 'tw.practice.security'
+        , 'tw.practice.login'
     ]);
     
     
@@ -24,7 +26,7 @@
     angular.module('tw.practice').run(runModule);
     
     /** @ngInject */
-    function configureModule($logProvider, $locationProvider, $urlRouterProvider, toastrConfig, twUserRepositoryProvider) {
+    function configureModule($logProvider, $locationProvider, $urlRouterProvider, toastrConfig, twUserRepositoryProvider, twHttpAuthenticationServiceProvider) {
         // Enable log
         $logProvider.debugEnabled(true);
 
@@ -43,6 +45,14 @@
         twUserRepositoryProvider.configure({
             // repository: 'ng-resources'
             repository: 'js-data'
+        });
+        
+        twHttpAuthenticationServiceProvider.configure({
+            // note, as our server does not allow CORS requests gulp http-proxy-middleware redirect /auth/local request to http://localhost:9000/auth/local
+            // baseUrl: 'http://localhost:9000',
+            loginUrl: '/auth/local',
+            // no http logout
+            logoutUrl: null
         });
     }
 

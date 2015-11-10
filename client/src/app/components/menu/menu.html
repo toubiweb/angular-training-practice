@@ -12,6 +12,10 @@
                     <li class="create-user-item" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }">
                         <a ui-sref="create-user">Create user</a>
                     </li>
+                    <li ng-if="!vm.isUserAuthenticated()" ng-class="{ active: vm.activeMenu === 'login' }"><a ui-sref="login">Login</a>
+                    </li>
+                    <li ng-if="vm.isUserAuthenticated()"><a ui-sref="logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>

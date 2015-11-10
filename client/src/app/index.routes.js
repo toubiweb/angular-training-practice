@@ -29,6 +29,17 @@
                 controller: 'TwProfileUserEditController',
                 controllerAs: 'vm',
                 authenticate: true
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/login/login.html',
+                controller: 'TwLoginController',
+                controllerAs: 'vm'
+            }).state('logout', {
+                url: '/logout',
+                controller: 'TwLogoutController',
+                controllerAs: 'vm',
+                authenticate: true
             });
     }
 
