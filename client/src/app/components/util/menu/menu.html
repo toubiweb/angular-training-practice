@@ -7,7 +7,7 @@
                     </li>
                     <li class="edit-user-item" ng-if="vm.activeMenu === 'edit-user'" ng-class="{ active: vm.activeMenu === 'edit-user' }"><a ui-sref="edit-user">Edit user</a>
                     </li>
-                    <li class="create-user-item" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }"><a ui-sref="create-user">Create user</a>
+                    <li tw-has-role="admin" class="create-user-item" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }"><a ui-sref="create-user">Create user</a>
                     </li>
                     <li ng-if="vm.isUserAuthenticated()" ng-class="{ active: vm.activeMenu === 'edit-location' }"><a ui-sref="edit-location({userId: vm.user.id})">Location</a>
                     </li>
