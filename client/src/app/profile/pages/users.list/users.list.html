@@ -82,11 +82,7 @@
         <div class="col-md-12">
 
             <div class="alert alert-info block-with-top-bottom-margins">
-               <!-- TODO: afficher, en fonction du nombre d'utilisateurs:
-               - There is no user
-               - There is only one user
-               - There are 4 users (including you John).
-               -->
+               {{vm.users.length, plural, offset:0 =0 {There is no user} =1 {There is only one user} other {There are # users (including you {{ vm.currentUser.firstName }}).} }}
             </div>
 
             <table class="table table-bordered table-striped table-hover table-condensed block-with-top-bottom-margins">
