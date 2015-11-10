@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('tw.practice').factory('twMoment', twMoment);
+    angular.module('tw.practice.util').factory('twMoment', twMoment);
 
     /** @ngInject */
     function twMoment($window, $log) {

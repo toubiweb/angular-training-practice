@@ -1,11 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('tw.practice').directive('twMenu', twMenu);
+    angular.module('tw.practice.util').directive('twMenu', twMenu);
     /** @ngInject */
     function twMenu() {
         return {
-            templateUrl: 'app/components/menu/menu.html',
+            templateUrl: 'app/components/util/menu/menu.html',
             controllerAs: 'vm',
             scope: {
                 activeMenu: '='

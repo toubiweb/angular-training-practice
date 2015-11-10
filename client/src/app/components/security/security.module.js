@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('tw.practice.security', ['ngCookies', 'angular-jwt']);
+    angular.module('tw.practice.security', ['ngCookies', 'angular-jwt', 'tw.practice.util']);
 
     angular.module('tw.practice.security').config(configureModule);
 
@@ -12,7 +12,7 @@
     function configureModule($httpProvider) {
 
         // register authentication interceptor on http service
-        $httpProvider.interceptors.push('twAuthenticationHttpInterceptor');
+        $httpProvider.interceptors.push('twHttpSecurityInterceptor');
     }
 
     /** @ngInject */

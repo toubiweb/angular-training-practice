@@ -85,6 +85,8 @@
         }
 
         function isAuthenticated() {
+
+
             if (currentUser !== null) {
                 // user already authenticated
                 return true;
@@ -99,6 +101,7 @@
                     $log.info('User authenticated: ', currentUser);
                     return true;
                 }
+
             }
             return false;
         }

@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twTokenStorageService', twTokenStorageService);
 
     /** @ngInject */
-    function twTokenStorageService($log) {
+    function twTokenStorageService($log, twLocalStorage) {
 
         var service = {};
 
@@ -17,11 +17,11 @@
 
         function setToken(token) {
             $log.debug('Store authentication token "%s".', token);
-            // TODO
+            // TODO twLocalStorage...
         }
 
         function getToken() {
-            var token = null; // TODO
+            var token = null;// TODO twLocalStorage...
             if (!token){
                 token = null;
             }
@@ -30,7 +30,7 @@
 
         function removeToken() {
             $log.debug('Clear authentication token.');
-            // TODO
+            // TODO twLocalStorage...
         }
 
         return service;

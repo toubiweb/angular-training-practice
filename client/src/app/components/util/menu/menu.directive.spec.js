@@ -6,7 +6,7 @@
             $rootScope, $scope, $log;
         
         // load module containing the directive
-        beforeEach(module('tw.practice'));
+        beforeEach(module('tw.practice.util'));
 
         // load templates
         beforeEach(module('ngHtml2JsPreprocessor'));
