@@ -41,8 +41,8 @@
         $urlRouterProvider.otherwise('/');
 
         twUserRepositoryProvider.configure({
-            // repository: 'ng-resources'
-            repository: 'js-data'
+            repository: 'ng-resources'
+            // repository: 'js-data'
         });
     }
 

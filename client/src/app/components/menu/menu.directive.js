@@ -21,13 +21,18 @@
         var vm = this;
 
         // public attributes
+        vm.clearCache = clearCache;
         
         // public methods
 
         // initialization
-        init();
-
-        function init() {}
+        function clearCache(){
+            // clear cache
+            twUserRepository.clearCache();
+            // reload page
+            $state.reload();
+        }
+        
         
         return vm;
     }
