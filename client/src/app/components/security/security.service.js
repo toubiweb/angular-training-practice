@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twSecurityService', twSecurityService);
 
     /** @ngInject */
-    function twSecurityService($rootScope, $log, $q, $cookies, $location, jwtHelper, twHttpAuthenticationService) {
+    function twSecurityService($rootScope, $log, $q, $cookies, $location, jwtHelper, twHttpAuthenticationService, twTokenStorageService) {
 
         var service = {};
 
@@ -19,13 +19,36 @@
         service.hasRole = hasRole;
         service.getCurrentUser = getCurrentUser;
 
+        function buildSecurityUser(token) {
+
+            var tokenClaims = jwtHelper.decodeToken(token);
+
+            $log.debug('Token claims:', tokenClaims);
+
+            var user = {
+                id: tokenClaims._id,
+                role: tokenClaims.role,
+                firstName: tokenClaims.firstName,
+                lastName: tokenClaims.lastName
+            };
+
+            return user;
+        }
+
         function login(login, password) {
 
             var deferred = $q.defer();
 
             twHttpAuthenticationService.login(login, password).then(function (token) {
 
-                $log.debug('User logged in with token: %s.', token);
+                // success: save security token
+                twTokenStorageService.setToken(token);
+
+                // build security user
+                currentUser = buildSecurityUser(token)
+
+                $log.debug('Emit logged-in message.');
+                $rootScope.$emit('tw.security.user-logged-in');
                 deferred.resolve(currentUser);
 
             }, function error(err) {
@@ -45,7 +68,11 @@
                 // success
                 currentUser = null;
 
-                $log.debug('User logged out.');
+                // remove token
+                twTokenStorageService.removeToken();
+
+                $log.debug('Emit logged-out message.');
+                $rootScope.$emit('tw.security.user-logged-out');
                 deferred.resolve(res);
 
             }, function error(err) {
@@ -62,20 +89,26 @@
                 // user already authenticated
                 return true;
             } else {
-                // NOT IMPLEMENTED
-                return false;
+                // try to read token
+                var token = twTokenStorageService.getToken();
+
+                if (token) {
+                    // build security user
+                    currentUser = buildSecurityUser(token)
+
+                    $log.info('User authenticated: ', currentUser);
+                    return true;
+                }
             }
             return false;
         }
 
         function hasOneOfRoles(roles) {
-            // NOT IMPLEMENTED
-            return false;
+            return isAuthenticated() && (roles.indexOf(currentUser.role) === -1);
         }
 
         function hasRole(role) {
-            // NOT IMPLEMENTED
-            return false;
+            return isAuthenticated() && role === currentUser.role;
         }
 
         function getCurrentUser() {

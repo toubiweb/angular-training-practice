@@ -23,6 +23,14 @@
         init();
 
         function init() {
+
+            var cb = $rootScope.$on('tw.security.user-logged-in', function (event, data) {
+                // Logged in, redirect to home
+                $log.debug('Received logged-in message.');
+                $state.go('view-users');
+            });
+
+            $rootScope.$on('$destroy', cb)
         }
 
         function login(form) {

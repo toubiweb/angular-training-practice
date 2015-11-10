@@ -58,7 +58,16 @@
 
     /** @ngInject */
     function runModule($rootScope, $log, $state) {
+                
+        // in case of logout, redirect to login page
         
+        var cb = $rootScope.$on('tw.security.user-logged-out', function (event, data) {
+            // user logged out: redirect to login page
+            $log.debug('Received logged-out message.');
+            $state.go('login');
+        });
+
+        $rootScope.$on('$destroy', cb)
 
     }
 
