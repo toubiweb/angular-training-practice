@@ -41,14 +41,22 @@
 
                 var deferred = $q.defer();
 
+                
                 $http({
-                    method: null /* TODO */,
-                    url: null /* TODO */,
-                    data: null /* TODO */
+                    method: config.loginMethod,
+                    url: config.baseUrl + config.loginUrl,
+                    data: {
+                        login: login,
+                        password: password
+                    }
                 }).then(function successCallback(response) {
                     // success
-                    // TODO return token
-                    deferred.resolve(null);
+                    if (response.data && response.data.token){
+                        var token = response.data.token;
+                        deferred.resolve(token);
+                    }else{
+                        deferred.reject(new Error('Token not found in authentication answer.'));
+                    }
                 }, function errorCallback(response) {
                     // authentication error
                     if (response.statusText){
@@ -69,8 +77,8 @@
                 if (config.logoutUrl) {
                     // http logout
                     $http({
-                        method: null /* TODO */,
-                        url: null /* TODO */
+                        method: config.logoutMethod,
+                        url: config.baseUrl + config.logoutUrl
                     }).then(function successCallback(response) {
                         // success: remove token
                         deferred.resolve({});
