@@ -17,11 +17,11 @@
 
         function setToken(token) {
             $log.debug('Store authentication token "%s".', token);
-            // TODO twLocalStorage...
+            twLocalStorage.setItem(key, token);
         }
 
         function getToken() {
-            var token = null;// TODO twLocalStorage...
+            var token = twLocalStorage.getItem(key);
             if (!token){
                 token = null;
             }
@@ -30,7 +30,7 @@
 
         function removeToken() {
             $log.debug('Clear authentication token.');
-            // TODO twLocalStorage...
+            twLocalStorage.removeItem(key);
         }
 
         return service;
