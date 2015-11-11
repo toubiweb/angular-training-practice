@@ -45,20 +45,25 @@
     }
     
     /** @ngInject */
-    function configureRoutesSecurity($rootScope, $state, twSecurityService) {
-        // Redirect to login if route requires auth and you're not logged in
+    function configureRoutesSecurity($log, $rootScope, $state, twSecurityService, twRouteSecurityService) {
 
+        // redirect if user does not has access to next route
         var cb = $rootScope.$on('$stateChangeStart', function (event, nextState) {
           
-            if ((nextState.authenticate || nextState.roles) && !twSecurityService.isAuthenticated()) {
-                // user not logged in: redirect
+            if (!twRouteSecurityService.hasAccess(nextState)){
+                // prevent current route change
                 event.preventDefault();
-                $state.go('login');
-            } else if (twSecurityService.hasRole(nextState.roles)) {
-                // user not authorized: redirect
-                event.preventDefault();
-                $state.go('view-users');
+                if (twSecurityService.isAuthenticated()){
+                    // access denied
+                    $log.error('Access denied: redirect to home page.');
+                    $state.go('view-users');
+                }else{
+                    // use not authenticated
+                    $log.error('User not authenticated: redirect to login page.');
+                    $state.go('login');
+                }
             }
+            
         });
         $rootScope.$on('$destroy', cb)
     }

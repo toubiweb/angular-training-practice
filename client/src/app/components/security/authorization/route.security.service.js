@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twRouteSecurityService', twRouteSecurityService);
 
     /** @ngInject */
-    function twRouteSecurityService($log, $state) {
+    function twRouteSecurityService($log, $state, twSecurityService) {
  
         var service = {};
 
@@ -14,18 +14,42 @@
         service.hasAccess = hasAccess;
         service.go = go;
 
-        function hasAccess(route) {
-            // TODO
-            var routeState = $state.get(route);
+        function isSecured(state){
+            return (state.authenticate || state.roles);
+        }
+        
+        function hasAccess(stateName) {
+
+            var state = $state.get(stateName);
             
-            $log.debug('Route state: ', routeState);
-            
-            return true;
+            if (isSecured(state)){
+                // route is secured
+                if (!twSecurityService.isAuthenticated()){
+                    // user not authenticated
+                    return false;
+                }
+                
+                if (state.roles){
+                    // route is secured by role
+                    if (twSecurityService.hasOneOfRoles(state.roles)){
+                        //ok
+                        return true;
+                    }else{
+                        // access denied
+                        return false;
+                    }
+                }
+                
+                return true;
+                
+            }else{
+                return true;
+            }
         }
 
-        function go(route, params) {
-            if (hasAccess(route)){
-                $state.go(route, params);
+        function go(stateName, params) {
+            if (hasAccess(stateName)){
+                $state.go(stateName, params);
                 return true;
             }else{
                 return false;
