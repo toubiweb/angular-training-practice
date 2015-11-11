@@ -15,6 +15,7 @@
         };
     }
 
+    /** @ngInject */
     function TwMenuController($state, twUserRepository, twSecurityService) {
 
         // view model

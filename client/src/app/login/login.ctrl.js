@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.login').controller('TwLoginController', TwLoginController);
 
+    /** @ngInject */
     function TwLoginController($rootScope, $log, $state, toastr, twSecurityService) {
 
         // view model

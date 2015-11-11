@@ -42,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="user-row" ng-class="{ link: vm.isAuthenticated() }" ng-repeat="user in vm.filteredUsers = (vm.users | filter:vm.strictFilter:true | filter:vm.nonstrictFilter ) | orderBy:'firstName':true | limitTo:vm.itemsByPage:vm.getFirstIndex()" ng-click="vm.goToDetails(user)">
+            <tr class="user-row" ng-class="{ link: vm.isAllowedToEditUser() }" ng-repeat="user in vm.filteredUsers = (vm.users | filter:vm.strictFilter:true | filter:vm.nonstrictFilter ) | orderBy:'firstName':true | limitTo:vm.itemsByPage:vm.getFirstIndex()" ng-click="vm.goToDetails(user)">
                 <td>{{ user._id }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>

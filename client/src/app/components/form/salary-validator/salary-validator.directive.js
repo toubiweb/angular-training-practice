@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.form').directive('twSalaryValidator', twSalaryValidator);
 
+    /** @ngInject */
     function twSalaryValidator() {
         return {
             scope: {
@@ -13,6 +14,7 @@
         };
     }
 
+    /** @ngInject */
     function TwSalaryValidatorLink($scope, $element, $attrs, ngModelCtrl) {
 
         init();

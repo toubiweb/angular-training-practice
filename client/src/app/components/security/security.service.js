@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twSecurityService', twSecurityService);
 
     /** @ngInject */
-    function twSecurityService($rootScope, $log, $q, $cookies, $location, jwtHelper, twHttpAuthenticationService, twTokenStorageService) {
+    function twSecurityService($rootScope, $log, $q, $cookies, $location, jwtHelper, twHttpAuthenticationService, twTokenStorageService, twRouteSecurityService) {
 
         var service = {};
 
@@ -18,6 +18,7 @@
         service.hasOneOfRoles = hasOneOfRoles;
         service.hasRole = hasRole;
         service.getCurrentUser = getCurrentUser;
+        
 
         function buildSecurityUser(token) {
 

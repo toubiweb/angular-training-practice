@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('tw.practice.security', ['angular-jwt', 'tw.practice.util']);
+    angular.module('tw.practice.security', ['angular-jwt', 'tw.practice.util', 'ui.router']);
 
     angular.module('tw.practice.security').config(configureModule);
 

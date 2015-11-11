@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.form').factory('twPasswordService', twPasswordService);
 
+    /** @ngInject */
     function twPasswordService() {
 
         var service = {};
