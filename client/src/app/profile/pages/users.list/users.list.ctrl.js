@@ -4,7 +4,7 @@
     angular.module('tw.practice.profile').controller('TwProfileUsersListController', TwProfileUsersListController);
 
     /** @ngInject */
-    function TwProfileUsersListController($scope, $log, $state, $q, toastr, twUserRepository, twUserGeneratorService, twRouteSecurityService) {
+    function TwProfileUsersListController($scope, $log, $state, $q, toastr, twUserRepository, twUserGeneratorService, twRouteSecurityService, twLeaflet) {
 
         // view model
         var vm = this;
@@ -16,18 +16,6 @@
         vm.currentPage = 1;
         vm.filter = {};
         vm.nbUsersToGenerate = 5;
-        vm.genderOptions = [
-            {
-                id: undefined,
-                label: 'All'
-            }, {
-                id: 'male',
-                label: 'Male'
-            }, {
-                id: 'female',
-                label: 'Female'
-            }
-        ];
         vm.mapDefaults = {
             // Oujda, Morocco
             tileLayer: 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
@@ -54,13 +42,29 @@
 
         function init() {
             
-            loadUsers();
+            loadUsers().then(loadMap);
 
             $scope.$watch(function () {
                 return vm.filter;
             }, function (newFilter, oldFilter) {
                 vm.currentPage = 1;
             }, true);
+        }
+        
+         function loadMap(){
+            var usersCircles = vm.users.reduce(function (circles, user) {
+                if (user.location && user.location.coordinates) {
+                    var circle = twLeaflet.circle(user.location.coordinates, 100, {
+                        color: '#0045ff',
+                        fillColor: '#ea461f',
+                        fillOpacity: 0.5
+                    });
+                    circles.push(circle);
+                }
+                return circles;
+            }, []);
+
+            vm.mapDefaults.layers = usersCircles;
         }
         
         function generateUsers(nb){

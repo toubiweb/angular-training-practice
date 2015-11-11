@@ -84,7 +84,7 @@
     </table>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
 
             <div class="alert alert-info block-with-top-bottom-margins">
                {{vm.users.length, plural, offset:0 =0 {There is no user} =1 {There is only one user} other {There are # users (including you {{ vm.currentUser.firstName }}).} }}
@@ -113,6 +113,8 @@
                 </tbody>
             </table>
         </div>
-
+        <div class="col-md-6">
+            <div tw-leaflet-map map-defaults="vm.mapDefaults"></div>
+        </div>
     </div>
 </div>
