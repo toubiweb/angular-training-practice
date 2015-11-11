@@ -3,7 +3,8 @@
 
     angular.module('tw.practice.login').controller('TwLogoutController', TwLogoutController);
 
-    function TwLogoutController($rootScope, $log, $state, toastr, twSecurityService) {
+    /** @ngInject */
+    function TwLogoutController(twSecurityService) {
 
         // immediate logout
         twSecurityService.logout();

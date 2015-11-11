@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.form').directive('twErrorMessages', twErrorMessages);
 
+    /** @ngInject */
     function twErrorMessages() {
         return {
             templateUrl: 'app/components/form/error-messages/error-messages.directive.html',

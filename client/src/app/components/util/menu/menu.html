@@ -3,13 +3,9 @@
         <div class="navbar-header">
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="view-users-item" ng-class="{ active: vm.activeMenu === 'view-users' }"><a ui-sref="view-users">Users</a>
-                    </li>
-                    <li class="edit-user-item" ng-if="vm.activeMenu === 'edit-user'" ng-class="{ active: vm.activeMenu === 'edit-user' }"><a ui-sref="edit-user">Edit user</a>
-                    </li>
-                    <li tw-has-role="admin" class="create-user-item" ng-if="vm.activeMenu !== 'edit-user'" ng-class="{ active: vm.activeMenu === 'create-user' }"><a ui-sref="create-user">Create user</a>
-                    </li>
-                    <li ng-if="vm.isUserAuthenticated()" ng-class="{ active: vm.activeMenu === 'edit-location' }"><a ui-sref="edit-location({userId: vm.user.id})">Location</a>
+                   
+                    <li ng-repeat="route in vm.routes | filter:vm.accessibleRoute" ng-class="{ active: vm.activeMenu === route.state }" class="{{ route.state }}-item">
+                        <a ui-sref="{{ route.state }}">{{ route.label }}</a>
                     </li>
                     <li ng-if="!vm.isUserAuthenticated()" ng-class="{ active: vm.activeMenu === 'login' }"><a ui-sref="login">Login</a>
                     </li>

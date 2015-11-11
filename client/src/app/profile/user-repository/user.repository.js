@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.profile').provider('twUserRepository', twUserRepositoryProvider);
 
+    /** @ngInject */
     function twUserRepositoryProvider() {
 
         var provider = {};

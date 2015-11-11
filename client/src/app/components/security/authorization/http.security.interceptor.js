@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twHttpSecurityInterceptor', twHttpSecurityInterceptor);
 
     /** @ngInject */
-    function twHttpSecurityInterceptor($log, $q, $cookies, $location, $rootScope, twTokenStorageService) {
+    function twHttpSecurityInterceptor($log, $q, $location, $rootScope, twTokenStorageService) {
 
        return {
             // add authorization token to headers

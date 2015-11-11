@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.profile').controller('TwProfileUserEditController', TwProfileUserEditController);
 
+    /** @ngInject */
     function TwProfileUserEditController($scope, $state, $stateParams, $log, $timeout, toastr, twMoment, twUserRepository, twUserGeneratorService) {
 
         // view-model

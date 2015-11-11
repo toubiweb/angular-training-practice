@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.profile').factory('twResourceUserRepository', twResourceUserRepository);
 
+    /** @ngInject */
     function twResourceUserRepository($resource, $log, $q, twResourceUserCacheService) {
 
         var service = {};
