@@ -15,27 +15,40 @@
         };
     }
 
-    function TwMenuController($state, twUserRepository, twSecurityService) {
+    /** @ngInject */
+    function TwMenuController($state, twUserRepository, twSecurityService, twRouteSecurityService) {
 
         // view model
         var vm = this;
 
         // public attributes
-        vm.user = twSecurityService.getCurrentUser()
-        
-        // public methods
-        vm.clearCache = clearCache;
-        
-        vm.isUserAuthenticated = twSecurityService.isAuthenticated;
-        // public methods
+        vm.user = twSecurityService.getCurrentUser();
+        vm.routes = [
+            {
+                state: 'view-users',
+                label: 'Users'
+            }, {
+                state: 'create-user',
+                label: 'Create user'
+            }
+        ];
 
-        function clearCache(){
+        // public methods
+        vm.accessibleRoute = accessibleRoute;
+        vm.clearCache = clearCache;
+        vm.isUserAuthenticated = twSecurityService.isAuthenticated;
+
+        function clearCache() {
             // clear cache
             twUserRepository.clearCache();
             // reload page
             $state.reload();
         }
         
+        function accessibleRoute(route) {
+            return twRouteSecurityService.hasAccess(route.state);
+        }
+
         return vm;
     }
 

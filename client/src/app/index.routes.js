@@ -5,6 +5,8 @@
 
     angular.module('tw.practice').config(configureRoutes);
 
+    angular.module('tw.practice').run(configureRoutesSecurity);
+
     /** @ngInject */
     function configureRoutes($stateProvider) {
 
@@ -38,9 +40,32 @@
             }).state('logout', {
                 url: '/logout',
                 controller: 'TwLogoutController',
-                controllerAs: 'vm',
-                authenticate: true
+                controllerAs: 'vm'
             });
     }
+    
+    /** @ngInject */
+    function configureRoutesSecurity($log, $rootScope, $state, twSecurityService, twRouteSecurityService) {
 
+        // redirect if user does not has access to next route
+        var cb = $rootScope.$on('$stateChangeStart', function (event, nextState) {
+          
+            if (!twRouteSecurityService.hasAccess(nextState)){
+                // prevent current route change
+                event.preventDefault();
+                if (twSecurityService.isAuthenticated()){
+                    // access denied
+                    $log.error('Access denied: redirect to home page.');
+                    $state.go('view-users');
+                }else{
+                    // use not authenticated
+                    $log.error('User not authenticated: redirect to login page.');
+                    $state.go('login');
+                }
+            }
+            
+        });
+        $rootScope.$on('$destroy', cb)
+    }
+    
 })();

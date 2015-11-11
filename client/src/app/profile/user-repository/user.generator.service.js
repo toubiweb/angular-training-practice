@@ -3,6 +3,7 @@
 
     angular.module('tw.practice.profile').factory('twUserGeneratorService', twUserGeneratorService);
 
+    /** @ngInject */
     function twUserGeneratorService($state, twUserRepository) {
 
         var service = {};

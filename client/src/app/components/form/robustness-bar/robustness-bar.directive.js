@@ -4,6 +4,7 @@
 
     angular.module('tw.practice.form').directive('twRobustnessBar', twRobustnessBar);
 
+    /** @ngInject */
     function twRobustnessBar() {
         return {
             templateUrl: 'app/components/form/robustness-bar/robustness-bar.directive.html',
@@ -17,6 +18,7 @@
         };
     }
 
+    /** @ngInject */
     function TwRobustnessBarController(twPasswordService) {
 
         var vm = this;

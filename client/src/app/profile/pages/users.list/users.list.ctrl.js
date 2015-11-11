@@ -3,7 +3,8 @@
 
     angular.module('tw.practice.profile').controller('TwProfileUsersListController', TwProfileUsersListController);
 
-    function TwProfileUsersListController($scope, $log, $state, $q, toastr, twUserRepository, twUserGeneratorService) {
+    /** @ngInject */
+    function TwProfileUsersListController($scope, $log, $state, $q, toastr, twUserRepository, twUserGeneratorService, twRouteSecurityService) {
 
         // view model
         var vm = this;
@@ -46,6 +47,7 @@
         vm.goToNextPage = goToNextPage;
         vm.goToPreviousPage = goToPreviousPage;
         vm.generateUsers = generateUsers;
+        vm.isAllowedToEditUser = isAllowedToEditUser
 
         // initialization
         init();
@@ -86,9 +88,13 @@
         }
 
         function goToDetails(user) {
-            $state.go('edit-user', {
+            twRouteSecurityService.go('edit-user', {
                 userId: user._id
             });
+        }
+        
+        function isAllowedToEditUser(user){
+            return twRouteSecurityService.hasAccess('edit-user');
         }
         
         function getTotalPages() {
