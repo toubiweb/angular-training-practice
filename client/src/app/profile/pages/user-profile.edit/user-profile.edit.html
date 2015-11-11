@@ -42,9 +42,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label class="control-label">Password (confirm)</label>
-                                        <input name="passwordConfirmation" class="form-control" type="password" ng-model="vm.passwordConfirmation" match="vm.password">
+                                        <input name="passwordConfirmation" class="form-control" type="password" ng-model="vm.user.passwordConfirmation" match="vm.user.password">
                                     </div>
-                                    <div tw-error-messages form="passwordForm" attribute-name="passwordConfirmation">
+                                    <div tw-error-messages form="userForm" attribute-name="passwordConfirmation">
                                         <!-- override default message -->
                                         <div class="error" ng-message="match">Password does not match.</div>
                                     </div>
