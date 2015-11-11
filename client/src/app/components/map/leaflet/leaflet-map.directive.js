@@ -72,16 +72,19 @@
                 maxZoom: 18
             }).addTo(vm.map);
 
-            var circle = twLeaflet.circle({
-                    lat: 34.6798,
-                    lng: -1.9103
-                }, 100, {
-                color: '#0045ff',
-                fillColor: '#ea461f',
-                fillOpacity: 0.5
+            $scope.$watch('vm.mapConfig.defaults.layers', function (layers) {
+                if (layers && layers.length !== 0) {
+                    $log.debug('Draw %d layers.', layers.length);
+                    for (var i = 0; i < layers.length; i++) {
+                        var layer = layers[i];
+                        layer.addTo(vm.map);
+                    }
+                }
             });
-            circle.addTo(vm.map);
 
+            vm.map.on('click', function (e) {
+                vm.mapConfig.events.click(e);
+            });
         }
 
         return vm;
