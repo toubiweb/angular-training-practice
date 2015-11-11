@@ -29,7 +29,7 @@
         }
 
         // service
-        function getService($log, $q, $cookies, $location, $http) {
+        function getService($log, $q, $location, $http) {
 
             var service = {};
 
