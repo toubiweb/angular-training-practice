@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('tw.practice.security', ['ngCookies', 'angular-jwt']);
+    angular.module('tw.practice.security', ['angular-jwt']);
 
     angular.module('tw.practice.security').config(configureModule);
 
