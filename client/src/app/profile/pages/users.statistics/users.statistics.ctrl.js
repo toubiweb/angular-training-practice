@@ -58,16 +58,18 @@
                 var s = user.salary;
                 if (s && s > 0) {
                     var range;
-                    if (s < 3000) {
-                        range = '< 3K€'
-                    } else if (s < 6000) {
-                        range = '3K€-6K€'
-                    }else if (s < 9000) {
-                        range = '6K€-9K€'
-                    } else if (s < 12000) {
-                        range = '9K€-12K€'
+                    if (s < 6000) {
+                        range = '< 6K€'
+                    } else if (s < 7000) {
+                        range = '< 7K€'
+                    } else if (s < 8000) {
+                        range = '< 8K€'
+                    } else if (s < 9000) {
+                        range = '< 9K€'
+                    } else if (s < 10000) {
+                        range = '< 10K€'
                     } else{
-                        range = '> 12K€'
+                        range = '> 10K€'
                     }
                     if (!counts[range]) {
                         counts[range] = 1;
