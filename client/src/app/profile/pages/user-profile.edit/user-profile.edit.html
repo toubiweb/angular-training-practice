@@ -2,10 +2,6 @@
 
     <div tw-menu active-menu="vm.activeMenu"></div>
 
-    <div ng-if="vm.mode === 'edition'">
-        <a class="link" ui-sref="edit-password({firstName: vm.user.firstName})">Change password</a>
-    </div>
-
     <div class="page">
         <div class="row">
 
@@ -141,7 +137,7 @@
                                 <i class="glyphicon glyphicon-remove"></i> Reset
                             </a>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" tw-has-role="admin">
                             <a ng-click="vm.remove()" class="btn btn-lg btn-cancel large outline">
                                 <i class="glyphicon glyphicon-trash"></i> Remove
                             </a>
