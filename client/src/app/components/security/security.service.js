@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twSecurityService', twSecurityService);
 
     /** @ngInject */
-    function twSecurityService($rootScope, $log, $q, $location, jwtHelper, twHttpAuthenticationService, twTokenStorageService, twRouteSecurityService) {
+    function twSecurityService($rootScope, $log, $q, $location, jwtHelper, twHttpAuthenticationService, twTokenStorageService) {
 
         var service = {};
 
