@@ -15,10 +15,15 @@
                 <select ng-model="vm.strictFilter.gender" ng-options="gender.id as gender.label for gender in vm.genderOptions">
                 </select>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <a class="btn btn-primary" ng-click="vm.generateUsers(vm.nbUsersToGenerate)">Generate users</a>
                 <input ng-model="vm.nbUsersToGenerate" />
             </div>
+            <div class="col-sm-3">
+                 <a class="btn btn-primary" ui-sref="create-user" tw-has-route-access="create-user">Create a new user</a>
+            </div>
+            
+           
         </div>
     </form>
 
