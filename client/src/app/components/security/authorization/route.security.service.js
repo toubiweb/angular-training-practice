@@ -4,7 +4,7 @@
     angular.module('tw.practice.security').factory('twRouteSecurityService', twRouteSecurityService);
 
     /** @ngInject */
-    function twRouteSecurityService($state) {
+    function twRouteSecurityService($log, $state) {
  
         var service = {};
 
@@ -16,6 +16,10 @@
 
         function hasAccess(route) {
             // TODO
+            var routeState = $state.get(route);
+            
+            $log.debug('Route state: ', routeState);
+            
             return true;
         }
 

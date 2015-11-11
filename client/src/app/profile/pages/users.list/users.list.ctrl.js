@@ -88,17 +88,9 @@
         }
 
         function goToDetails(user) {
-            
             twRouteSecurityService.go('edit-user', {
-                    userId: user._id
-                });
-            
-            /*if (twSecurityService.isAuthenticated()){
-                $state.go('edit-user', {
-                    userId: user._id
-                });
-            }*/
-            
+                userId: user._id
+            });
         }
         
         function isAllowedToEditUser(user){
