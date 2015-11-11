@@ -30,6 +30,10 @@
             }, {
                 state: 'create-user',
                 label: 'Create user'
+            },
+            {
+                state: 'view-users-statistics',
+                label: 'Statistics'
             }
         ];
 
@@ -44,7 +48,7 @@
             // reload page
             $state.reload();
         }
-        
+
         function accessibleRoute(route) {
             return twRouteSecurityService.hasAccess(route.state);
         }

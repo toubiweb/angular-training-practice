@@ -2,7 +2,7 @@
 
     'use strict';
 
-    angular.module('tw.practice.profile', ['ui.router', 'ngResource', 'angular-cache', 'js-data', 'tw.practice.util', 'tw.practice.security', 'validation.match']);
+    angular.module('tw.practice.profile', ['ui.router', 'ngResource', 'angular-cache', 'js-data', 'tw.practice.util', 'tw.practice.security', 'validation.match', 'tw.practice.chart']);
 
     angular.module('tw.practice.profile').config(configureModule);
 

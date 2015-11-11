@@ -13,8 +13,11 @@
 
         function generateUsers(nbUsersToGenerate, inject) {
             var users = [];
+            
+            var seed = 1 + (Math.random() / 10);
+            
             for (var i = 0; i < nbUsersToGenerate; i++) {
-                users.push(generateUser());
+                users.push(generateUser(seed));
             }
             if (inject){
                 var injectedUsers = twUserRepository.injectAll(users);
@@ -24,7 +27,12 @@
             }
         }
 
-        function generateUser() {
+        function generateUser(seed) {
+            
+            if (!seed){
+                seed = 0;
+            }
+            
             var user = {
                 _id: '' + Math.floor(Math.random() * 10000000) + Math.floor(Math.random() * 10000000),
                 password: 'pass',
@@ -32,8 +40,8 @@
                 provider: 'local',
                 firstName: service.getRandomUserData().firstName,
                 lastName: service.getRandomUserData().lastName,
-                gender: service.getRandomBoolean() ? 'male' : 'female',
-                employed: service.getRandomBoolean(),
+                gender: service.getRandomBoolean(seed) ? 'male' : 'female',
+                employed: service.getRandomBoolean(seed),
                 birthdate: service.getRandomDate (new Date(1970, 0, 1), new Date(1995, 0, 1)),
                 location: {
                     coordinates: {
@@ -46,7 +54,7 @@
             user.login = (user.firstName + '.' + user.lastName).toLowerCase();
             user.email = (user.firstName + '.' + user.lastName + '@' + 'toubiweb.com').toLowerCase();
             if (user.employed) {
-                user.salary = Math.floor(Math.random() * (100 - 70) + 70) * 100;
+                user.salary = Math.floor(Math.random() * (100 - 70) + 70) * 100 * seed;
             }
             return user;
         }
@@ -55,8 +63,8 @@
             return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
         }
 
-        service.getRandomBoolean = function () {
-            var randomBoolean = Math.random() >= 0.5;
+        service.getRandomBoolean = function (seed) {
+            var randomBoolean = (Math.random() * seed) >= 0.5;
             return randomBoolean;
         }
 

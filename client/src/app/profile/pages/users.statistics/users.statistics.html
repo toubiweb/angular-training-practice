@@ -1,0 +1,27 @@
+<div class="container profile-users-statistics-page">
+
+    <div tw-menu active-menu="'view-users-statistics'"></div>
+
+    <h1>Statistics ({{ vm.users.length }} users)</h1>
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <div tw-donut-chart chart-config="vm.genderChartConfig" chart-data="vm.genderChartData"></div>
+
+        </div>
+        <!--<div class="col-sm-6">
+            <div tw-donut-chart chart-config="vm.salaryChartConfig" chart-data="vm.salaryChartData"></div>
+        </div>-->
+    </div>
+       
+       <form novalidate class="block-with-top-bottom-margins">
+        <div class="row">
+            <div class="col-sm-6">
+                <a class="btn btn-primary" ng-click="vm.generateUsers(vm.nbUsersToGenerate)">Generate users</a>
+                <input ng-model="vm.nbUsersToGenerate" />
+            </div>
+        </div>
+    </form>
+
+</div>

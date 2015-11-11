@@ -32,6 +32,12 @@
                 controllerAs: 'vm',
                 authenticate: true
             })
+            .state('view-users-statistics', {
+                url: '/users/statistics',
+                templateUrl: 'app/profile/pages/users.statistics/users.statistics.html',
+                controller: 'TwProfileUsersStatisticsController',
+                controllerAs: 'vm'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'app/login/login.html',
@@ -43,29 +49,29 @@
                 controllerAs: 'vm'
             });
     }
-    
+
     /** @ngInject */
     function configureRoutesSecurity($log, $rootScope, $state, twSecurityService, twRouteSecurityService) {
 
         // redirect if user does not has access to next route
         var cb = $rootScope.$on('$stateChangeStart', function (event, nextState) {
-          
-            if (!twRouteSecurityService.hasAccess(nextState)){
+
+            if (!twRouteSecurityService.hasAccess(nextState)) {
                 // prevent current route change
                 event.preventDefault();
-                if (twSecurityService.isAuthenticated()){
+                if (twSecurityService.isAuthenticated()) {
                     // access denied
                     $log.error('Access denied: redirect to home page.');
                     $state.go('view-users');
-                }else{
+                } else {
                     // use not authenticated
                     $log.error('User not authenticated: redirect to login page.');
                     $state.go('login');
                 }
             }
-            
+
         });
         $rootScope.$on('$destroy', cb)
     }
-    
+
 })();
