@@ -43,18 +43,20 @@
                 controllerAs: 'vm'
             });
     }
-
     
-    function configureRoutesSecurity($rootScope, $location, twSecurityService) {
+    function configureRoutesSecurity($rootScope, $state, twSecurityService) {
         // Redirect to login if route requires auth and you're not logged in
 
         var cb = $rootScope.$on('$stateChangeStart', function (event, nextState) {
+          
             if ((nextState.authenticate || nextState.roles) && !twSecurityService.isAuthenticated()) {
                 // user not logged in: redirect
-                $location.path('/login');
+                event.preventDefault();
+                $state.go('login');
             } else if (twSecurityService.hasRole(nextState.roles)) {
                 // user not authorized: redirect
-                $location.path('/');
+                event.preventDefault();
+                $state.go('view-users');
             }
         });
         $rootScope.$on('$destroy', cb)
