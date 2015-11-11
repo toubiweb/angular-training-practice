@@ -24,7 +24,11 @@
 
         // scope attributes
         vm.chart = {};
-        vm.chartConfig = {};
+        vm.chartConfig = {
+            cssId: 'tw-donut-chart' + Math.floor(Math.random() * 1000000),
+            cssClass: 'tw-donut-chart',
+            title: '100%'
+        };
         // scope methods
 
         // init method
@@ -42,39 +46,40 @@
 
             angular.extend(vm.chartConfig, vm.userChartConfig);
 
-            // TODO include static donutschart example from http://nvd3-community.github.io/nvd3/examples/site.html
-
-            var testdata = [
-                {key: "One", y: 5},
-                {key: "Two", y: 2},
-                {key: "Three", y: 9},
-                {key: "Four", y: 7},
-                {key: "Five", y: 4},
-                {key: "Six", y: 3},
-                {key: "Seven", y: 0.5}
-            ];
             var height = 350;
             var width = 350;
             var chart1;
-            nv.addGraph(function() {
-                var chart1 = nv.models.pieChart()
-                    .x(function(d) { return d.key })
-                    .y(function(d) { return d.y })
+            twNvd3.addGraph(function () {
+
+                var chart1 = twNvd3.models.pieChart()
+                    .x(function (d) {
+                        return d.key
+                    })
+                    .y(function (d) {
+                        return d.y
+                    })
                     .donut(true)
                     .width(width)
                     .height(height)
                     .padAngle(.08)
                     .cornerRadius(5)
-                    .id('donut1'); // allow custom CSS for this one svg
-                chart1.title("100%");
+                    .id('donut');
+
+                chart1.title(vm.chartConfig.title);
+
                 chart1.pie.donutLabelsOutside(true).donut(true);
-                d3.select("#test1")
-                    .datum(testdata)
-                    .transition().duration(1200)
-                    .call(chart1);
-                //nv.utils.windowResize(chart1.update);
+                $scope.$watch('vm.chartData', function (chartData) {
+                    if (chartData) {
+                        twD3.select('#' + vm.chartConfig.cssId)
+                            .datum(chartData)
+                            .transition().duration(1200)
+                            .call(chart1);
+                    }
+                });
+
                 return chart1;
             });
+
         }
 
         return vm;
