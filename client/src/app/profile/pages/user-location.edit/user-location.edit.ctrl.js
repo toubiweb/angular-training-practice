@@ -82,11 +82,11 @@
                 // display an error message
                 toastr.error('An error occured while updating user.');
             });
-            
+
         }
 
         function classicUpdateLocation(coordinates) {
-           
+
             vm.user.location = {
                 coordinates: coordinates
             };
@@ -104,7 +104,7 @@
                 // display an error message
                 toastr.error('An error occured while updating user.');
             });
-            
+
             var deffered = $q.defer();
 
         }
@@ -112,7 +112,7 @@
         function patchLocation(userId, coordinates) {
             var deffered = $q.defer();
 
-           // patch way points
+            // patch way points
             var patches = [{
                 op: 'replace',
                 path: '/location/coordinates',
@@ -123,8 +123,19 @@
                 patches: patches
             }, {
                 method: 'patch'
-            }).then(function (user) {
+            }).then(function (res) {
                 // success
+
+                $log.info(vm.user.location.coordinates);
+
+                jsonpatch.apply(vm.user, patches);
+
+                $log.info(vm.user.location.coordinates);
+
+                // update local cache
+                DS.inject(vm.user._id, vm.user);
+
+
                 deffered.resolve(user);
             }, function (err) {
                 $log.error(err);
