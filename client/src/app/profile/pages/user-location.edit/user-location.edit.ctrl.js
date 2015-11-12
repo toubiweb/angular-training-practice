@@ -53,8 +53,8 @@
                         fillColor: '#ea461f',
                         fillOpacity: 0.5
                     });
+                    vm.mapDefaults.layers.push(circle);
                 }
-                vm.mapDefaults.layers.push(circle);
 
             }, function (err) {
                 $log.error(err);
