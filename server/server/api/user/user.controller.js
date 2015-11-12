@@ -139,9 +139,13 @@ exports.changePassword = function (req, res, next) {
  */
 exports.updateProfile = function (req, res, next) {
 
+    console.log('update profile)');
+    
     // security check
     var userId = req.params.id;
 
+    console.log(req.params);
+    
     if (req.user){
         // only if user authenticated (to be able to disable security on routes globally)
         var currentUserId = req.user._id;
