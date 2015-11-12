@@ -44,6 +44,7 @@
                 <th>Birthdate</th>
                 <th>Employed</th>
                 <th>Salary</th>
+                <th>Location</th>
             </tr>
         </thead>
         <tbody>
@@ -56,6 +57,7 @@
                 <td>{{ user.birthdate | date }}</td>
                 <td>{{ user.employed }}</td>
                 <td>{{ user.salary }}</td>
+                <td><span ng-if="user.location.coordinates">{{ user.location.coordinates.lat }} {{ user.location.coordinates.lng }}</span></td>
             </tr>
         </tbody>
         <tfoot>
@@ -114,7 +116,7 @@
             </table>
         </div>
         <div class="col-md-6">
-            <div tw-leaflet-map map-defaults="vm.mapDefaults"></div>
+            <div tw-leaflet-map map-defaults="vm.mapDefaults" map-data="vm.mapData"></div>
         </div>
     </div>
 </div>

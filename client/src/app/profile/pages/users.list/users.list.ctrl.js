@@ -37,6 +37,9 @@
             },
             zoom: 12
         };
+        vm.mapData = {
+            points: []
+        };
 
         // public methods
         vm.goToDetails = goToDetails;
@@ -54,7 +57,7 @@
 
         function init() {
 
-            loadUsers().then(loadMap);
+            loadUsers().then(loadMapData);
 
             $scope.$watch(function () {
                 return vm.filter;
@@ -63,25 +66,25 @@
             }, true);
         }
 
-        function loadMap() {
-            var usersCircles = vm.users.reduce(function (circles, user) {
+        function loadMapData() {
+            
+            vm.mapData.points = vm.users.reduce(function (points, user) {
                 if (user.location && user.location.coordinates) {
-                    var circle = twLeaflet.circle(user.location.coordinates, 100, {
-                        color: '#0045ff',
-                        fillColor: '#ea461f',
-                        fillOpacity: 0.5
-                    });
-                    circles.push(circle);
+                    var point = {
+                        location: user.location
+                    };
+                    points.push(point);
                 }
-                return circles;
+                return points;
             }, []);
 
-            vm.mapDefaults.layers = usersCircles;
         }
 
         function generateUsers(nb) {
             var generatedUsers = twUserGeneratorService.generateUsers(nb);
             vm.users = vm.users.concat(generatedUsers);
+            $log.info('Users: ', vm.users.length);
+            loadMapData();
         }
 
         function loadUsers() {

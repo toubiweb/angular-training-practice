@@ -10,7 +10,8 @@
             controllerAs: 'vm',
             scope: {
                 userChartConfig: '=chartConfig',
-                chartData: '='
+                chartData: '=',
+                onSelect: '&'
             },
             bindToController: true,
             controller: TwDonutChartController
@@ -83,6 +84,10 @@
                     twD3.selectAll('#' + vm.chartConfig.cssId + ' .nv-slice').on('click', function (d) {
                         vm.userChartConfig.selection = d.data.key;
                         $scope.$apply();
+                        
+                        if (typeof(vm.onSelect) == 'function'){
+                            vm.onSelect({ selection: d.data.key });
+                        }
                     });
                 }
             });

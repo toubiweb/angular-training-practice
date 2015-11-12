@@ -20,6 +20,9 @@
 
         // public methods
         vm.generateUsers = generateUsers;
+        vm.onGenderChartClicked = function (selection) {
+            alert(selection);
+        };
 
         // initialization
         init();
@@ -68,7 +71,7 @@
                         range = '< 9K€'
                     } else if (s < 10000) {
                         range = '< 10K€'
-                    } else{
+                    } else {
                         range = '> 10K€'
                     }
                     if (!counts[range]) {

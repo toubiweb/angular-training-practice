@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-sm-6">
-            <div tw-donut-chart chart-config="vm.genderChartConfig" chart-data="vm.genderChartData"></div>
+            <div tw-donut-chart chart-config="vm.genderChartConfig" chart-data="vm.genderChartData" select="vm.onGenderChartClicked(selection)"></div>
             <div ng-show="vm.genderChartConfig.selection">Selection: <b>{{ vm.genderChartConfig.selection }}</b></div>
         </div>
         <div class="col-sm-6">
