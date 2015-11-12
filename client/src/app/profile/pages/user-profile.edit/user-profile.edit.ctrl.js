@@ -64,6 +64,7 @@
 
                     $timeout(function () {
                         // redirect to list after 2s timeout
+                        $log.info('Go to state %s.', 'view-users');
                         $state.go('view-users');
                     }, 2000);
                 });
