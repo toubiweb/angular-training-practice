@@ -30,7 +30,15 @@
         ];
         vm.mapDefaults = {
             // Oujda, Morocco
-            tileLayer: 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png',
+            baseLayers: [
+                {
+                    label: 'Cycle map',
+                    url: 'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
+                }, {
+                    label: 'Watercolor map',
+                    url: 'http://c.tile.stamen.com/watercolor/{z}/{x}/{y}.png'
+                }
+            ],
             center: {
                 lat: 34.6798,
                 lng: -1.9103

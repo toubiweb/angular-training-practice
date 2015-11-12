@@ -35,9 +35,6 @@
                     {
                         label: 'Otile map',
                         url: 'http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg'
-                    }, {
-                        label: 'Cycle map',
-                        url: 'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
                     },
                     {
                         label: 'Outdoors map',
@@ -46,6 +43,9 @@
                     {
                         label: 'Transport map',
                         url: 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png'
+                    }, {
+                        label: 'Cycle map',
+                        url: 'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png'
                     }
                 ],
                 scrollWheelZoom: true,
@@ -108,9 +108,9 @@
             $scope.$watch('vm.userMapData.points', function (points) {
                 if (points && points.length !== 0) {
 
-                    var circles = buildCirclesFromPoints(points);
+                    var markers = buildMarkersFromPoints(points);
 
-                    redrawPoints(circles);
+                    redrawPoints(markers);
                 }
             }, true);
 
@@ -119,19 +119,24 @@
             });
         }
 
-        function buildCirclesFromPoints(points) {
-            var circles = points.reduce(function (circles, point) {
+        function buildMarkersFromPoints(points) {
+            var markers = points.reduce(function (markers, point) {
                 if (point && point.location && point.location.coordinates) {
-                    var circle = L.circle(point.location.coordinates, 100, {
-                        color: '#0045ff',
-                        fillColor: '#ea461f',
-                        fillOpacity: 0.5
-                    });
-                    circles.push(circle);
+                    markers.push(buildMarket(point));
                 }
-                return circles;
+                return markers;
             }, []);
-            return circles;
+            return markers;
+        }
+
+        function buildMarket(point) {
+            // return new L.Marker(point.location.coordinates)
+
+            return L.circle(point.location.coordinates, 100, {
+                color: '#0045ff',
+                fillColor: '#ea461f',
+                fillOpacity: 0.5
+            });
         }
 
         function redrawPoints(layers) {

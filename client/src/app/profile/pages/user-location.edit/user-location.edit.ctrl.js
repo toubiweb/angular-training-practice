@@ -18,7 +18,9 @@
             },
             zoom: 12
         };
-
+        vm.mapData = {
+            points: []
+        };
         vm.mapEvents = {
             click: function (event) {
                 updateLocation(event.latlng);
@@ -48,12 +50,7 @@
                 vm.user = user;
 
                 if (user.location && user.location.coordinates) {
-                    var circle = twLeaflet.circle(user.location.coordinates, 100, {
-                        color: '#0045ff',
-                        fillColor: '#ea461f',
-                        fillOpacity: 0.5
-                    });
-                    vm.mapDefaults.layers.push(circle);
+                    initMap();
                 }
 
             }, function (err) {
@@ -75,7 +72,7 @@
             twUserRepository.updateOne(vm.user).then(function (user) {
                 // success: display a success message
                 toastr.success('User successfully saved.');
-
+                initMap();
                 $timeout(function () {
                     // redirect to list after 2s timeout
                     $state.go('view-users');
@@ -88,15 +85,18 @@
         }
 
         function initMap() {
-            // add a vector circle
+            if (vm.user) {
 
-            var circle = twLeaflet.circle(vm.mapDefaults.center, 7000, {
-                color: '#f03',
-                fillColor: '#645',
-                fillOpacity: 0.1
-            })
+                // add a vector circle
 
-            vm.mapDefaults.layers = [circle];
+                if (vm.user.location && vm.user.location.coordinates) {
+                    var point = {
+                        location: vm.user.location
+                    };
+                    vm.mapData.points = [point];
+                }
+
+            }
         }
     }
 
