@@ -114,15 +114,15 @@
 
            // patch way points
             var patches = [{
-                op: 'TODO',
-                path: 'TODO',
-                value: 'TODO'
+                op: 'replace',
+                path: '/location/coordinates',
+                value: coordinates
             }];
 
             DS.update('users', userId, {
                 patches: patches
             }, {
-                method: 'TODO'
+                method: 'patch'
             }).then(function (user) {
                 // success
                 deffered.resolve(user);
