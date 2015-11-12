@@ -31,10 +31,6 @@
         init();
 
         function init() {
-            if (!$stateParams.userId) {
-                $log.error('User id not set: redirect.');
-                $state.go('view-users');
-            }
 
             initMap();
 
@@ -43,29 +39,16 @@
         }
 
         function loadUser() {
-            twUserRepository.findOne($stateParams.userId).then(function (user) {
-                // success
-                vm.user = user;
+            vm.user = twSecurityService.getCurrentUser();
 
-                if (user.location && user.location.coordinates) {
-                    var circle = twLeaflet.circle(user.location.coordinates, 100, {
-                        color: '#0045ff',
-                        fillColor: '#ea461f',
-                        fillOpacity: 0.5
-                    });
-                }
-                vm.mapDefaults.layers.push(circle);
-
-            }, function (err) {
-                $log.error(err);
-                // display an error message
-                toastr.error('An error occured while loading user.');
-
-                $timeout(function () {
-                    // redirect to list after 2s timeout
-                    $state.go('view-users');
-                }, 2000);
-            });
+            if ( vm.user.location &&  vm.user.location.coordinates) {
+                var circle = twLeaflet.circle(vm.user.location.coordinates, 100, {
+                    color: '#0045ff',
+                    fillColor: '#ea461f',
+                    fillOpacity: 0.5
+                });
+            }
+            vm.mapDefaults.layers.push(circle);
         }
 
         function updateLocation(coordinates) {
