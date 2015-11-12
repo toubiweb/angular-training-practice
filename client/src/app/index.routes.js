@@ -38,6 +38,13 @@
                 controller: 'TwProfileUsersStatisticsController',
                 controllerAs: 'vm'
             })
+             .state('edit-location', {
+                url: '/user/:userId/edit-location',
+                templateUrl: 'app/profile/pages/user-location.edit/user-location.edit.html',
+                controller: 'TwProfileUserLocationEditController',
+                controllerAs: 'vm',
+                authenticate: true
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'app/login/login.html',
