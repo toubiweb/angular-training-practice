@@ -3,7 +3,7 @@
 
     angular.module('tw.practice.profile').controller('TwProfileUserLocationEditController', TwProfileUserLocationEditController);
 
-    function TwProfileUserLocationEditController($scope, $state, $stateParams, $log, $timeout, toastr, twLeaflet, twSecurityService, twUserRepository) {
+    function TwProfileUserLocationEditController($q, $scope, $state, $stateParams, $log, $timeout, toastr, twLeaflet, twSecurityService, twUserRepository, DS) {
 
         // view model
         var vm = this;
@@ -69,9 +69,28 @@
         }
 
         function updateLocation(coordinates) {
+            patchLocation(vm.user._id, coordinates).then(function (user) {
+                // success: display a success message
+                toastr.success('User successfully saved.');
+
+                $timeout(function () {
+                    // redirect to list after 2s timeout
+                    $state.go('view-users');
+                }, 2000);
+            }, function (err) {
+                $log.error(err);
+                // display an error message
+                toastr.error('An error occured while updating user.');
+            });
+            
+        }
+
+        function classicUpdateLocation() {
+           
             vm.user.location = {
                 coordinates: coordinates
             };
+
             twUserRepository.updateOne(vm.user).then(function (user) {
                 // success: display a success message
                 toastr.success('User successfully saved.');
@@ -85,7 +104,36 @@
                 // display an error message
                 toastr.error('An error occured while updating user.');
             });
+            
+            var deffered = $q.defer();
+
         }
+
+        function patchLocation(userId, coordinates) {
+            var deffered = $q.defer();
+
+           // patch way points
+            var patches = [{
+                op: 'TODO',
+                path: 'TODO',
+                value: 'TODO'
+            }];
+
+            DS.update('users', userId, {
+                patches: patches
+            }, {
+                method: 'TODO'
+            }).then(function (user) {
+                // success
+                deffered.resolve(user);
+            }, function (err) {
+                $log.error(err);
+                deffered.reject(err);
+            });
+
+            return deffered.promise;
+        }
+
 
         function initMap() {
             // add a vector circle

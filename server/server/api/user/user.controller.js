@@ -2,6 +2,8 @@
 
 var _ = require('lodash');
 
+var jsonpatch = require ('fast-json-patch');
+
 import User from './user.model';
 import passport from 'passport';
 import config from '../../config/environment';
@@ -52,13 +54,13 @@ function handleEntityNotFound(res) {
 
 
 function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(function(updated) {
-        return updated;
-      });
-  };
+    return function (entity) {
+        var updated = _.merge(entity, updates);
+        return updated.saveAsync()
+            .spread(function (updated) {
+                return updated;
+            });
+    };
 }
 var securityFieldsToExclude = '-salt -login -password -provider';
 
@@ -140,21 +142,21 @@ exports.changePassword = function (req, res, next) {
 exports.updateProfile = function (req, res, next) {
 
     console.log('update profile)');
-    
+
     // security check
     var userId = req.params.id;
 
     console.log(req.params);
-    
-    if (req.user){
+
+    if (req.user) {
         // only if user authenticated (to be able to disable security on routes globally)
         var currentUserId = req.user._id;
-        if (req.user.role !== 'admin' && currentUserId !== userId){
+        if (req.user.role !== 'admin' && currentUserId !== userId) {
             return res.status(403).end();
         }
     }
-    
-    
+
+
     // do not update login/password/salt/provider
     delete req.body.login;
     delete req.body.password;
@@ -168,6 +170,27 @@ exports.updateProfile = function (req, res, next) {
         .then(saveUpdates(req.body))
         .then(responseWithResult(res))
         .catch(handleError(res));
+};
+
+exports.patch = function (req, res) {
+
+    var userId = req.params.id;
+
+    User.findByIdAsync(userId).then(function (user) {
+
+        var patches = req.body.patches;
+
+        jsonpatch.apply(user, patches);
+
+        user.save(function (err) {
+            if (err) {
+                return handleError(res, err);
+            }
+            return res.json(200, user);
+        });
+    }, function (err) {
+        return handleError(res, err);
+    });
 };
 
 /**
