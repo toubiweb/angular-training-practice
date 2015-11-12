@@ -15,6 +15,10 @@
         service.go = go;
 
         function isSecured(state){
+            if (!state){
+                $log.error('State is not defined.');
+                return false;
+            }
             return (state.authenticate || state.roles);
         }
         

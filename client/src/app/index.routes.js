@@ -39,7 +39,7 @@
                 controllerAs: 'vm'
             })
              .state('edit-location', {
-                url: '/user/:userId/edit-location',
+                url: '/user/edit-my-location',
                 templateUrl: 'app/profile/pages/user-location.edit/user-location.edit.html',
                 controller: 'TwProfileUserLocationEditController',
                 controllerAs: 'vm',

@@ -35,25 +35,6 @@
 
         });
 
-        it('should hide create-user when user is in edition', function () {
-
-            // compile the template
-            var element = angular.element('<div tw-menu active-menu="activeMenu"></div>');
-            var template = $compile(element)($scope);
-
-            // update root scope with view-uses as active menu
-            $scope.activeMenu = 'edit-user';
-            // run a $digest cycle to update your template with new data
-            $rootScope.$digest();
-            
-            // $log.debug(template);
-            // console.log(template);
-            
-            // expect creat-users to be hidden
-            expect(template.find('li.create-user-item').length).toEqual(0);
-            expect(template.find('li.edit-user-item').length).toEqual(1);
-
-        });
     });
 
 }());
