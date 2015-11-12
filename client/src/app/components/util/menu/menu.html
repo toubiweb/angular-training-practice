@@ -8,6 +8,8 @@
                     </li>
                     <li ng-if="!vm.isUserAuthenticated()" ng-class="{ active: vm.activeMenu === 'login' }"><a ui-sref="login">Login</a>
                     </li>
+                    <li ng-if="vm.isUserAuthenticated()"><a ui-sref="edit-location({userId: vm.user.id})">My location</a>
+                    </li>
                     <li ng-if="vm.isUserAuthenticated()"><a ui-sref="logout">Logout</a>
                     </li>
                 </ul>
