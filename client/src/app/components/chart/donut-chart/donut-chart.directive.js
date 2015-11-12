@@ -25,9 +25,10 @@
         // scope attributes
         vm.chart = {};
         vm.chartConfig = {
-            cssId: 'tw-donut-chart' + Math.floor(Math.random() * 1000000),
+            cssId: 'tw-donut-chart' + Math.floor(Math.random() * 10000000),
             cssClass: 'tw-donut-chart',
-            title: '100%'
+            title: '100%',
+            selected: ''
         };
         // scope methods
 
@@ -46,40 +47,47 @@
 
             angular.extend(vm.chartConfig, vm.userChartConfig);
 
+            twNvd3.addGraph(buildDonut);
+        }
+
+        function buildDonut() {
+
             var height = 350;
             var width = 350;
-            var chart1;
-            twNvd3.addGraph(function () {
 
-                var chart1 = twNvd3.models.pieChart()
-                    .x(function (d) {
-                        return d.key
-                    })
-                    .y(function (d) {
-                        return d.y
-                    })
-                    .donut(true)
-                    .width(width)
-                    .height(height)
-                    .padAngle(.08)
-                    .cornerRadius(5)
-                    .id('donut');
+            vm.chart = twNvd3.models.pieChart()
+                .x(function (d) {
+                    return d.key
+                })
+                .y(function (d) {
+                    return d.y
+                })
+                .donut(true)
+                .width(width)
+                .height(height)
+                .padAngle(.08)
+                .cornerRadius(5)
+                .id(vm.chartConfig.cssId);
 
-                chart1.title(vm.chartConfig.title);
+            vm.chart.title(vm.chartConfig.title);
 
-                chart1.pie.donutLabelsOutside(true).donut(true);
-                $scope.$watch('vm.chartData', function (chartData) {
-                    if (chartData) {
-                        twD3.select('#' + vm.chartConfig.cssId)
-                            .datum(chartData)
-                            .transition().duration(1200)
-                            .call(chart1);
-                    }
-                });
+            vm.chart.pie.labelsOutside(true).donut(true);
 
-                return chart1;
+            $scope.$watch('vm.chartData', function (chartData) {
+                if (chartData) {
+                    twD3.select('#' + vm.chartConfig.cssId)
+                        .datum(chartData)
+                        .transition().duration(1200)
+                        .call(vm.chart);
+
+                    twD3.selectAll('#' + vm.chartConfig.cssId + ' .nv-slice').on('click', function (d) {
+                        vm.userChartConfig.selection = d.data.key;
+                        $scope.$apply();
+                    });
+                }
             });
 
+            return vm.chart;
         }
 
         return vm;

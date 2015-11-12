@@ -53,6 +53,7 @@
 
         function go(stateName, params) {
             if (hasAccess(stateName)){
+                $log.info('Go to state %s.', stateName);
                 $state.go(stateName, params);
                 return true;
             }else{
