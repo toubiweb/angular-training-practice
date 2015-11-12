@@ -85,7 +85,7 @@
             
         }
 
-        function classicUpdateLocation() {
+        function classicUpdateLocation(coordinates) {
            
             vm.user.location = {
                 coordinates: coordinates
