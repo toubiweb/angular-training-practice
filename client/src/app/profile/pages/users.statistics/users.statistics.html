@@ -6,12 +6,12 @@
 
     <div class="row">
         <div class="col-sm-6">
-
             <div tw-donut-chart chart-config="vm.genderChartConfig" chart-data="vm.genderChartData"></div>
-
+            <div ng-show="vm.genderChartConfig.selection">Selection: {{ vm.genderChartConfig.selection }}</div>
         </div>
         <div class="col-sm-6">
             <div tw-donut-chart chart-config="vm.salaryChartConfig" chart-data="vm.salaryChartData"></div>
+            <div ng-show="vm.salaryChartConfig.selection">Selection: {{ vm.salaryChartConfig.selection }}</div>
         </div>
     </div>
        
