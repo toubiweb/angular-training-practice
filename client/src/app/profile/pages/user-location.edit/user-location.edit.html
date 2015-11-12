@@ -1,0 +1,11 @@
+<div class="container profile-user-location-edit-page">
+
+    <div tw-menu active-menu="vm.activeMenu"></div>
+
+   <h1>User "{{ vm.user.firstName }} {{ vm.user.lastName }}" location</h1>
+   
+    <p>Click on the map to set your location.</p>
+
+    <div tw-leaflet-map map-defaults="vm.mapDefaults" map-events="vm.mapEvents"></div>
+
+</div>

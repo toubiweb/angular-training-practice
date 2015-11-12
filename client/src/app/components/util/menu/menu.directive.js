@@ -34,6 +34,10 @@
             {
                 state: 'view-users-statistics',
                 label: 'Statistics'
+            },
+            {
+                state: 'edit-location',
+                label: 'My location'
             }
         ];
 
